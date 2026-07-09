@@ -1,15 +1,14 @@
 import type { WinnerSide } from "./types";
 
 /**
- * Cuadro de eliminación de la FASE FINAL (Octavos → Final), numerado 1..16.
- *   Octavos:        1-8
- *   Cuartos:        9-12
- *   Semifinales:    13-14
- *   Tercer puesto:  15
- *   Final:          16
+ * Cuadro de eliminación de la FASE FINAL (Cuartos → Final), numerado 1..8.
+ *   Cuartos de final:  1-4
+ *   Semifinales:       5-6
+ *   Tercer puesto:     7
+ *   Final:             8
  *
- * Para cada partido indica a qué llave y lado ('a' local / 'b' visitante)
- * van el GANADOR y, en semifinales, el PERDEDOR (al tercer puesto).
+ * SF1(5) = ganador(1) vs ganador(2);  SF2(6) = ganador(3) vs ganador(4).
+ * Final(8) = ganador SF1 vs ganador SF2;  3er puesto(7) = perdedores de las semis.
  */
 export type BracketTarget = { matchNumber: number; slot: WinnerSide };
 
@@ -19,30 +18,20 @@ type BracketNode = {
 };
 
 export const BRACKET: Record<number, BracketNode> = {
-  // Octavos -> Cuartos
-  1: { winnerTo: { matchNumber: 9, slot: "a" } },
-  2: { winnerTo: { matchNumber: 9, slot: "b" } },
-  3: { winnerTo: { matchNumber: 11, slot: "a" } },
-  4: { winnerTo: { matchNumber: 11, slot: "b" } },
-  5: { winnerTo: { matchNumber: 10, slot: "a" } },
-  6: { winnerTo: { matchNumber: 10, slot: "b" } },
-  7: { winnerTo: { matchNumber: 12, slot: "a" } },
-  8: { winnerTo: { matchNumber: 12, slot: "b" } },
-
   // Cuartos -> Semifinales
-  9: { winnerTo: { matchNumber: 13, slot: "a" } },
-  10: { winnerTo: { matchNumber: 13, slot: "b" } },
-  11: { winnerTo: { matchNumber: 14, slot: "a" } },
-  12: { winnerTo: { matchNumber: 14, slot: "b" } },
+  1: { winnerTo: { matchNumber: 5, slot: "a" } },
+  2: { winnerTo: { matchNumber: 5, slot: "b" } },
+  3: { winnerTo: { matchNumber: 6, slot: "a" } },
+  4: { winnerTo: { matchNumber: 6, slot: "b" } },
 
   // Semifinales -> Final (ganador) y Tercer puesto (perdedor)
-  13: {
-    winnerTo: { matchNumber: 16, slot: "a" },
-    loserTo: { matchNumber: 15, slot: "a" },
+  5: {
+    winnerTo: { matchNumber: 8, slot: "a" },
+    loserTo: { matchNumber: 7, slot: "a" },
   },
-  14: {
-    winnerTo: { matchNumber: 16, slot: "b" },
-    loserTo: { matchNumber: 15, slot: "b" },
+  6: {
+    winnerTo: { matchNumber: 8, slot: "b" },
+    loserTo: { matchNumber: 7, slot: "b" },
   },
-  // 15 (tercer puesto) y 16 (final) no propagan.
+  // 7 (tercer puesto) y 8 (final) no propagan.
 };

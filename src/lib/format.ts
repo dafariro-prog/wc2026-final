@@ -10,7 +10,6 @@ export const TBD_TEAM = "Por definir";
 
 /** Rondas de la fase final (en orden). Todos los partidos son de eliminación. */
 export const KNOCKOUT_ROUNDS = [
-  "Octavos de final",
   "Cuartos de final",
   "Semifinal",
   "Tercer puesto",
